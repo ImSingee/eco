@@ -89,3 +89,22 @@ func (e *Collector) do(f func() error) (err error) {
 	err = f()
 	return
 }
+
+// Process do some functions but only if previous is not error
+func (e *Collector) Process(processes ...func() error) error {
+	for _, p := range processes {
+		if e.IsError() {
+			return e.Err()
+		}
+
+		e.Do(p)
+	}
+
+	return e.Err()
+}
+
+// Do some things until any error
+func Do(processes ...func() error) error {
+	e := New()
+	return e.Process(processes...)
+}
