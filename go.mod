@@ -1,3 +1,3 @@
-module eco
+module github.com/ImSingee/eco
 
-go 1.17
+go 1.14
